@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Blog engine API built on HapiJS",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon app"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,8 @@
     "nodemon": "^1.12.1"
   },
   "dependencies": {
-    "hapi": "^16.6.2"
+    "dotenv": "^4.0.0",
+    "hapi": "^16.6.2",
+    "hapi-cors-headers": "^1.0.0"
   }
 }
