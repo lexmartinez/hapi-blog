@@ -1,8 +1,6 @@
 {
-  "rules": {
-    "semi": ["error", "always"],
-    "quotes": ["error", "single"]
-  },
+  "extends": "standard",
+  "rules": {},
   "parserOptions": {
     "ecmaVersion": 6
   }
