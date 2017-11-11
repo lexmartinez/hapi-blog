@@ -1,6 +1,6 @@
 'use strict';
 
-const routes = require('../routes')
+const routes = require('../routes');
 
 exports.register =  (server, options, next) => {
     server.route(routes);

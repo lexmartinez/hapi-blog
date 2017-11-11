@@ -1,6 +1,6 @@
 'use strict';
 const Hapi = require('hapi');
-const corsHeaders = require('hapi-cors-headers')
+const corsHeaders = require('hapi-cors-headers');
 const dotenv = require('dotenv');
 const server = new Hapi.Server();
 
@@ -12,7 +12,7 @@ server.connection({
     }
 });
 
-server.ext('onPreResponse', corsHeaders)
+server.ext('onPreResponse', corsHeaders);
 server.register({
         register: require('./plugins/routing.plugin.js')
     }, {
@@ -27,6 +27,6 @@ server.register({
 
     server.start(() => {
         console.log(`Server running at: ${server.info.uri}`);
-    })
+    });
 
 });
