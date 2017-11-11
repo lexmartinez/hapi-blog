@@ -1,0 +1,29 @@
+{
+  "name": "hapi-blog",
+  "version": "1.0.0",
+  "description": "Blog engine API built on HapiJS",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lexmartinez/hapi-blog.git"
+  },
+  "keywords": [
+    "javascript",
+    "nodejs",
+    "restful-api",
+    "hapijs"
+  ],
+  "author": "Lex Martinez <lex0316@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/lexmartinez/hapi-blog/issues"
+  },
+  "homepage": "https://github.com/lexmartinez/hapi-blog#readme",
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "hapi": "^16.6.2"
+  }
+}
