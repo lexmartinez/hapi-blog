@@ -5,4 +5,6 @@
 [![GitHub license](https://img.shields.io/github/license/lexmartinez/hapi-blog.svg)](https://github.com/lexmartinez/hapi-blog/blob/master/LICENSE.md)
 [![Last version](https://img.shields.io/badge/version-v1.0.0-lightgrey.svg)](https://github.com/lexmartinez/hapi-blog/blob/master/CHANGELOG.md)
 <br/><br/>
-:octopus: Blog engine API built on HapiJS
+:octopus: A blogging engine API built on HapiJS <br/>
+
+Simple, powerful, flexible blogging engine, created as HapiJS study case with with purpose to be my website/blog core engine.
