@@ -1,17 +1,21 @@
+'use strict'
+const model = require('../models/tag.model')
+const base = require('./base.handler')
+
 module.exports = {
   list: (request, reply) => {
-    reply('Hello Handler')
+    base.list(model, request, reply)
   },
   find: (request, reply) => {
-    reply('Hello Handler')
+    base.find(model, request, reply)
   },
   store: (request, reply) => {
-    reply('Hello Handler')
+    base.store(model, request, reply)
   },
   update: (request, reply) => {
-    reply('Hello Handler')
+    base.update(model, request, reply)
   },
   delete: (request, reply) => {
-    reply('Hello Handler')
+    base.delete((model, request, reply))
   }
 }

@@ -1,5 +1,4 @@
 'use strict'
-
 const routes = require('../routes')
 
 exports.register = (server, options, next) => {

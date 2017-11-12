@@ -1,5 +1,4 @@
 'use strict'
-
 const handler = require('../handlers/tag.handler')
 const prefix = '/tags'
 

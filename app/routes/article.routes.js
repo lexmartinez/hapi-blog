@@ -1,5 +1,4 @@
 'use strict'
-
 const handler = require('../handlers/article.handler')
 const prefix = '/articles'
 
