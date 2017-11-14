@@ -2,6 +2,7 @@
   "name": "hapi-blog",
   "version": "1.0.0",
   "description": "Blog engine API built on HapiJS",
+  "main": "app/index.js",
   "scripts": {
     "start": "nodemon app",
     "test": "./node_modules/.bin/eslint app/**"
