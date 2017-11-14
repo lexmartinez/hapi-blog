@@ -1,1 +1,1 @@
-web: node app/index.js
+web: node app/index.js $PORT 3000
