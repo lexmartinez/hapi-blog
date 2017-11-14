@@ -1,5 +1,5 @@
 const base = require('./base.handler')
-const model = {}
+const model = require('../models/article.model')
 
 module.exports = {
   list: (request, reply) => {

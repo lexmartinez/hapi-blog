@@ -15,10 +15,14 @@ module.exports = sequelize.define('tag', {
     set (val) {
       this.setDataValue('name', val.toLowerCase())
     }
+  },
+  deletedAt: {
+    type: Sequelize.DATE,
+    field: 'deleted_at'
   }
 }, {
   paranoid: true,
-  underscored: true,
   tableName: 'blog_tag',
-  updatedAt: false
+  updatedAt: false,
+  createdAt: false
 })
