@@ -1,8 +1,8 @@
 'use strict'
 const Sequelize = require('sequelize')
 const sequelize = require('../utils/connection')
-
-module.exports = sequelize.define('article', {
+// const tag = require('./tag.model')
+const article = sequelize.define('article', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -41,3 +41,11 @@ module.exports = sequelize.define('article', {
   paranoid: true,
   tableName: 'blog_article'
 })
+
+// article.belongsToMany(tag, {as: 'tags',
+//   through: 'blog_tag_article', foreignKey: 'article_id'})
+//
+// tag.belongsToMany(article, {as: 'articles',
+//   through: 'blog_tag_article',foreignKey: 'tag_id'})
+
+module.exports = article
