@@ -1,5 +1,6 @@
 const base = require('./base.handler')
 const model = require('../models/article.model')
+const Boom = require('boom')
 
 module.exports = {
   list: (request, reply) => {
@@ -16,5 +17,17 @@ module.exports = {
   },
   delete: (request, reply) => {
     base.delete((model, request, reply))
+  },
+  tags: (request, reply) => {
+    model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})
+      .then(article => {
+        if (article && article.id) {
+          reply(article.getTags({attributes: {exclude: ['deletedAt']}}))
+        } else {
+          reply(Boom.notFound())
+        }
+      }).catch(error => {
+        reply(Boom.badImplementation(error))
+      })
   }
 }

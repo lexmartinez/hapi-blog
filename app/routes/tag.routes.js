@@ -12,6 +12,11 @@ module.exports = [
     method: 'GET',
     path: prefix + '/{id}',
     handler: handler.find
+  },
+  {
+    method: 'GET',
+    path: prefix + '/{id}/articles',
+    handler: handler.articles
   }
   // ,
   // {

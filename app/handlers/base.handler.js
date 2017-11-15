@@ -11,9 +11,9 @@ module.exports = {
   },
   find: (model, request, reply) => {
     model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})
-      .then(tag => {
-        if (tag.id) {
-          reply(tag)
+      .then(obj => {
+        if (obj && obj.id) {
+          reply(obj)
         } else {
           reply(Boom.notFound())
         }
@@ -23,8 +23,8 @@ module.exports = {
   },
   store: (model, request, reply) => {
     model.create(request.payload)
-      .then(tag => {
-        reply(tag)
+      .then(obj => {
+        reply(obj)
       }).catch(error => {
         reply(Boom.badImplementation(error))
       })
@@ -32,7 +32,7 @@ module.exports = {
   update: (model, request, reply) => {
     model.update(request.payload, {where: {
       id: encodeURIComponent(request.params.id)
-    }}).then((tag) => {
+    }}).then((obj) => {
       reply(utils.success)
     }).catch(error => {
       reply(Boom.badImplementation(error))
@@ -41,8 +41,8 @@ module.exports = {
   delete: (model, request, reply) => {
     model.destroy({where: {
       id: encodeURIComponent(request.params.id)
-    }}).then(tag => {
-      if (tag === 0) {
+    }}).then(obj => {
+      if (obj === 0) {
         reply(Boom.notFound())
       } else {
         reply(utils.success)

@@ -1,6 +1,7 @@
 'use strict'
 const model = require('../models/tag.model')
 const base = require('./base.handler')
+const Boom = require('boom')
 
 module.exports = {
   list: (request, reply) => {
@@ -17,5 +18,17 @@ module.exports = {
   },
   delete: (request, reply) => {
     base.delete((model, request, reply))
+  },
+  articles: (request, reply) => {
+    model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})
+      .then(tag => {
+        if (tag && tag.id) {
+          reply(tag.getArticles({attributes: {exclude: ['deletedAt']}}))
+        } else {
+          reply(Boom.notFound())
+        }
+      }).catch(error => {
+        reply(Boom.badImplementation(error))
+      })
   }
 }

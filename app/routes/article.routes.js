@@ -12,13 +12,13 @@ module.exports = [
     method: 'GET',
     path: prefix + '/{id}',
     handler: handler.find
+  },
+  {
+    method: 'GET',
+    path: prefix + '/{id}/tags',
+    handler: handler.tags
   }
   // ,
-  // {
-  //   method: 'GET',
-  //   path: prefix + '/{id}/tags',
-  //   handler: handler.tags
-  // },
   // {
   //   method: 'POST',
   //   path: prefix,
