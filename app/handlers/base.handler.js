@@ -3,14 +3,14 @@ const utils = require('../utils')
 
 module.exports = {
   list: (model, request, reply) => {
-    model.findAll().then(tags => {
+    model.findAll({attributes: {exclude: ['deletedAt']}}).then(tags => {
       reply(tags)
     }).catch(error => {
       reply(Boom.badImplementation(error))
     })
   },
   find: (model, request, reply) => {
-    model.findById(encodeURIComponent(request.params.id))
+    model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})
       .then(tag => {
         if (tag.id) {
           reply(tag)
