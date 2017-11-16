@@ -36,19 +36,27 @@ module.exports = {
     base.delete((model, request, reply))
   },
   tags: (request, reply) => {
-    const article =  model.findById(encodeURIComponent(request.params.id));
-    if (article && article.id) {
-      reply(article.getTags({attributes: {exclude: ['deletedAt']}}))
-     } else {
-      reply(Boom.notFound())
-    }
+    model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})
+      .then(article => {
+        if (article && article.id) {
+          reply(article.getTags({attributes: {exclude: ['deletedAt']}}))
+        } else {
+          reply(Boom.notFound())
+        }
+      }).catch(error => {
+        reply(Boom.badImplementation(error))
+      })
   },
   comments: (request, reply) => {
-    const article =  model.findById(encodeURIComponent(request.params.id));
-    if (article && article.id) {
-      reply(article.getComments({attributes: {exclude: ['deletedAt']}}))
-    } else {
-      reply(Boom.notFound())
-    }
+    model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})
+      .then(article => {
+        if (article && article.id) {
+          reply(article.getComments({attributes: {exclude: ['deletedAt']}}))
+        } else {
+          reply(Boom.notFound())
+        }
+      }).catch(error => {
+        reply(Boom.badImplementation(error))
+      })
   }
 }
