@@ -62,7 +62,7 @@ DB_USER=root
 DB_PASSWORD=password
 DB_DIALECT=mysql
 ```````
-
+> With the DB env variables configured, you can create all data schema with `sequelize.method()` command see the [sequelize docs](http://docs.sequelizejs.com/class/lib/sequelize.js~Sequelize.html)
  ## Testing
  
  `hapi-blog` has an [ESLint](https://eslint.org/) integration for consistent code inspection, you can run that tool with command:
