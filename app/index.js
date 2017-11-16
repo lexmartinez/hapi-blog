@@ -6,7 +6,7 @@ const server = new Hapi.Server()
 
 dotenv.config()
 server.connection({
-  port: process.env.APP_PORT || (process.env.PORT || 3000),
+  port: process.env.PORT || 3000,
   routes: {
     cors: true
   }
