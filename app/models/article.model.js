@@ -2,6 +2,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../utils/connection')
 const tag = require('./tag.model')
+const comment = require('./comment.model')
 
 const article = sequelize.define('article', {
   id: {
@@ -22,6 +23,11 @@ const article = sequelize.define('article', {
     allowNull: false,
     field: 'image_url',
     validate: { isUrl: true }
+  },
+  key: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    validate: { is: ['^([a-z0-9\\-])+', 'g'] }
   },
   publishedAt: {
     type: Sequelize.DATE,
@@ -45,7 +51,7 @@ const article = sequelize.define('article', {
 })
 
 article.belongsToMany(tag, {as: 'tags', through: 'blog_tag_article', foreignKey: 'article_id'})
-
 tag.belongsToMany(article, {as: 'articles', through: 'blog_tag_article', foreignKey: 'tag_id'})
+article.hasMany(comment, {as: 'comments', foreignKey: 'article_id'})
 
 module.exports = article

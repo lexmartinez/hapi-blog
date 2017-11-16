@@ -1,6 +1,6 @@
 'use strict'
-const handler = require('../handlers/article.handler')
-const prefix = '/articles'
+const handler = require('../handlers/author.handler')
+const prefix = '/authors'
 
 module.exports = [
   {
@@ -15,13 +15,8 @@ module.exports = [
   },
   {
     method: 'GET',
-    path: prefix + '/{id}/tags',
-    handler: handler.tags
-  },
-  {
-    method: 'GET',
-    path: prefix + '/{id}/comments',
-    handler: handler.comments
+    path: prefix + '/{id}/articles',
+    handler: handler.articles
   }
   // ,
   // {
