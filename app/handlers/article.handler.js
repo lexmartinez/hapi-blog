@@ -23,7 +23,6 @@ module.exports = {
       base.list(model, request, reply)
     }
   },
-  /* eslint-enable */
   find: (request, reply) => {
     base.find(model, request, reply)
   },
@@ -37,27 +36,19 @@ module.exports = {
     base.delete((model, request, reply))
   },
   tags: (request, reply) => {
-    model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})
-      .then(article => {
-        if (article && article.id) {
-          reply(article.getTags({attributes: {exclude: ['deletedAt']}}))
-        } else {
-          reply(Boom.notFound())
-        }
-      }).catch(error => {
-        reply(Boom.badImplementation(error))
-      })
+    const article =  model.findById(encodeURIComponent(request.params.id));
+    if (article && article.id) {
+      reply(article.getTags({attributes: {exclude: ['deletedAt']}}))
+     } else {
+      reply(Boom.notFound())
+    }
   },
   comments: (request, reply) => {
-    model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})
-      .then(article => {
-        if (article && article.id) {
-          reply(article.getComments({attributes: {exclude: ['deletedAt']}}))
-        } else {
-          reply(Boom.notFound())
-        }
-      }).catch(error => {
-        reply(Boom.badImplementation(error))
-      })
+    const article =  model.findById(encodeURIComponent(request.params.id));
+    if (article && article.id) {
+      reply(article.getComments({attributes: {exclude: ['deletedAt']}}))
+    } else {
+      reply(Boom.notFound())
+    }
   }
 }
