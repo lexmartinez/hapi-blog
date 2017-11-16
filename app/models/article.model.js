@@ -27,7 +27,8 @@ const article = sequelize.define('article', {
   key: {
     type: Sequelize.TEXT,
     allowNull: false,
-    validate: { is: ['^([a-z0-9\\-])+', 'g'] }
+    validate: { is: ['^([a-z0-9\\-])+', 'g'] },
+    unique: true
   },
   publishedAt: {
     type: Sequelize.DATE,
