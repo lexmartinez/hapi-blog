@@ -1,14 +1,15 @@
 const base = require('./base.handler')
 const model = require('../models/article.model')
 const Boom = require('boom')
-const async = require('asyncawait/async');
-const await = require('asyncawait/await');
+const async = require('asyncawait/async')
+const await = require('asyncawait/await')
 const author = require('../models/author.model')
+const tag = require('../models/tag.model')
 
 module.exports = {
   list: async (request, reply) => {
     if (request.query.key) {
-      const article = await (model.findOne({where:{key:request.query.key}, attributes: {exclude: ['deletedAt']}}))
+      const article = await (model.findOne({where:{key: request.query.key}, attributes: {exclude: ['deletedAt']}}))
       if (article && article.id) {
         const tags = await (article.getTags());
         const auth = await (author.findById(article.getDataValue('author_id'), {attributes: {exclude: ['deletedAt']}}))
@@ -16,6 +17,26 @@ module.exports = {
         article.setDataValue('tags',tags)
         article.setDataValue('author_id', undefined)
         reply(article)
+      } else {
+        reply(Boom.notFound())
+      }
+    } else if (request.query.tag) {
+      const tg = await (tag.findOne({where: {name: request.query.tag}, attributes: {exclude: ['deletedAt']}}))
+      if (tg && tg.id) {
+
+        const articles = tg.getArticles({attributes: {exclude: ['deletedAt']}});
+        for (var i = 0, len = articles.length; i < len; i++) {
+          const tags = await (articles[i].getTags());
+          const auth = await (author.findById(articles[i].getDataValue('author_id'), {attributes: {exclude: ['deletedAt']}}))
+          articles[i].setDataValue('author', auth);
+          articles[i].setDataValue('tags',tags)
+          articles[i].setDataValue('author_id', undefined)
+        }
+
+        const total = await model.count();
+        const response = reply(articles);
+        response.header('x-total-articles', total)
+
       } else {
         reply(Boom.notFound())
       }
