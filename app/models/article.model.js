@@ -14,6 +14,10 @@ const article = sequelize.define('article', {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  abstract: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
   content: {
     type: Sequelize.TEXT,
     allowNull: false
