@@ -11,7 +11,7 @@ module.exports = {
     if (request.query.key) {
       const article = await (model.findOne({where:{key: request.query.key}, attributes: {exclude: ['deletedAt']}}))
       if (article && article.id) {
-        const tags = await (article.getTags());
+        const tags = await (article.getTags({attributes: {exclude: ['deletedAt']}}));
         const auth = await (author.findById(article.getDataValue('author_id'), {attributes: {exclude: ['deletedAt']}}))
         article.setDataValue('author', auth);
         article.setDataValue('tags',tags)
@@ -24,18 +24,17 @@ module.exports = {
       const tg = await (tag.findOne({where: {name: request.query.tag}, attributes: {exclude: ['deletedAt']}}))
       if (tg && tg.id) {
 
-        const articles = tg.getArticles({attributes: {exclude: ['deletedAt']}});
+        const articles = await(tg.getArticles({attributes: {exclude: ['deletedAt']}}))
+
         for (var i = 0, len = articles.length; i < len; i++) {
-          const tags = await (articles[i].getTags());
+          const tags = await (articles[i].getTags({attributes: {exclude: ['deletedAt']}}));
           const auth = await (author.findById(articles[i].getDataValue('author_id'), {attributes: {exclude: ['deletedAt']}}))
           articles[i].setDataValue('author', auth);
           articles[i].setDataValue('tags',tags)
           articles[i].setDataValue('author_id', undefined)
         }
 
-        const total = await model.count();
-        const response = reply(articles);
-        response.header('x-total-articles', total)
+       reply(articles);
 
       } else {
         reply(Boom.notFound())
