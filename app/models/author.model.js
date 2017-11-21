@@ -13,6 +13,10 @@ const author = sequelize.define('author', {
     type: Sequelize.STRING(100),
     allowNull: false
   },
+  alias: {
+    type: Sequelize.STRING(20),
+    allowNull: false
+  },
   bio: Sequelize.STRING(100),
   github: {
     type: Sequelize.TEXT,
