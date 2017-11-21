@@ -3,8 +3,8 @@ const utils = require('../utils')
 
 module.exports = {
   list: (model, request, reply) => {
-    model.findAll({attributes: {exclude: ['deletedAt']}}).then(tags => {
-      reply(tags)
+    model.findAll({attributes: {exclude: ['deletedAt']}}).then(objects => {
+      reply(objects)
     }).catch(error => {
       reply(Boom.badImplementation(error))
     })

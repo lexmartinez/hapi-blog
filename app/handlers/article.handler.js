@@ -20,7 +20,24 @@ module.exports = {
         reply(Boom.notFound())
       }
     } else {
-      base.list(model, request, reply)
+      const articles = await model.findAll({
+        attributes: {exclude: ['deletedAt']},
+        order:[['publishedAt', 'DESC']],
+        limit: request.query.limit ? Number(request.query.limit) : 10,
+        offset: request.query.offset ? Number(request.query.offset) : 0
+      });
+
+      for (var i = 0, len = articles.length; i < len; i++) {
+        const tags = await (articles[i].getTags());
+        const auth = await (author.findById(articles[i].getDataValue('author_id'), {attributes: {exclude: ['deletedAt']}}))
+        articles[i].setDataValue('author', auth);
+        articles[i].setDataValue('tags',tags)
+        articles[i].setDataValue('author_id', undefined)
+      }
+
+      const total = await model.count();
+      const response = reply(articles);
+      response.header('x-total-articles', total)
     }
   },
   find: (request, reply) => {
