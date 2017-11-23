@@ -17,11 +17,6 @@ module.exports = [
     method: 'GET',
     path: prefix + '/{id}/tags',
     handler: handler.tags
-  },
-  {
-    method: 'GET',
-    path: prefix + '/{id}/comments',
-    handler: handler.comments
   }
   // ,
   // {

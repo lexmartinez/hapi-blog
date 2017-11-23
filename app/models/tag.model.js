@@ -12,6 +12,7 @@ module.exports = sequelize.define('tag', {
     type: Sequelize.STRING(30),
     unique: true,
     allowNull: false,
+    validate: { is: ['^([a-z0-9\\-])+', 'g'] },
     set (val) {
       this.setDataValue('name', val.toLowerCase())
     }
