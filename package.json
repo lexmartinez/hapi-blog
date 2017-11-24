@@ -35,13 +35,15 @@
     "asyncawait": "^1.0.6",
     "boom": "^7.1.1",
     "dotenv": "^4.0.0",
+    "github": "^12.0.5",
     "hapi": "^16.6.2",
     "hapi-cors-headers": "^1.0.0",
     "mysql2": "^1.4.2",
-    "sequelize": "^4.22.6"
+    "sequelize": "^4.22.6",
+    "sha1": "^1.1.1"
   },
   "engines": {
     "node": "7.10.1"
   },
- "license" : "MIT"
+  "license": "MIT"
 }

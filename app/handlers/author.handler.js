@@ -17,7 +17,7 @@ module.exports = {
     base.update(model, request, reply)
   },
   delete: (request, reply) => {
-    base.delete((model, request, reply))
+    base.delete(model, request, reply)
   },
   articles: (request, reply) => {
     model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}})

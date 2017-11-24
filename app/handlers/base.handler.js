@@ -1,5 +1,6 @@
 const Boom = require('boom')
 const utils = require('../utils')
+const auth = require('./auth.handler')
 
 module.exports = {
   list: (model, request, reply) => {
@@ -22,33 +23,67 @@ module.exports = {
       })
   },
   store: (model, request, reply) => {
-    model.create(request.payload)
-      .then(obj => {
-        reply(obj)
-      }).catch(error => {
-        reply(Boom.badImplementation(error))
-      })
+    const token = request.headers['x-auth-token']
+    if (token) {
+      auth.check(token).then((val) => {
+        if (val) {
+          model.create(request.payload)
+            .then(obj => {
+              reply(obj)
+            }).catch(error => {
+              reply(Boom.internal(error))
+            })
+        } else {
+          reply(Boom.unauthorized())
+        }
+      }).catch((error) => reply(Boom.internal(error)))
+    } else {
+      reply(Boom.unauthorized())
+    }
   },
   update: (model, request, reply) => {
-    model.update(request.payload, {where: {
-      id: encodeURIComponent(request.params.id)
-    }}).then((obj) => {
-      reply(utils.success)
-    }).catch(error => {
-      reply(Boom.badImplementation(error))
-    })
+    const token = request.headers['x-auth-token']
+    if (token) {
+      auth.check(token).then((val) => {
+        if (val) {
+          model.update(request.payload, {where: {
+            id: encodeURIComponent(request.params.id)
+          }}).then((obj) => {
+            reply(utils.success)
+          }).catch(error => {
+            reply(Boom.internal(error))
+          })
+        } else {
+          reply(Boom.unauthorized())
+        }
+      }).catch((error) => reply(Boom.internal(error)))
+    } else {
+      reply(Boom.unauthorized())
+    }
   },
   delete: (model, request, reply) => {
-    model.destroy({where: {
-      id: encodeURIComponent(request.params.id)
-    }}).then(obj => {
-      if (obj === 0) {
-        reply(Boom.notFound())
-      } else {
-        reply(utils.success)
-      }
-    }).catch(error => {
-      reply(Boom.badImplementation(error))
-    })
+    console.log(model)
+    const token = request.headers['x-auth-token']
+    if (token) {
+      auth.check(token).then((val) => {
+        if (val) {
+          model.destroy({where: {
+            id: encodeURIComponent(request.params.id)
+          }}).then(obj => {
+            if (obj === 0) {
+              reply(Boom.notFound())
+            } else {
+              reply(utils.success)
+            }
+          }).catch(error => {
+            reply(Boom.internal(error))
+          })
+        } else {
+          reply(Boom.unauthorized())
+        }
+      }).catch((error) => reply(Boom.internal(error)))
+    } else {
+      reply(Boom.unauthorized())
+    }
   }
 }
