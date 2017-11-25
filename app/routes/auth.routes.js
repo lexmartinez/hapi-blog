@@ -12,5 +12,10 @@ module.exports = [
     method: 'GET',
     path: prefix + '/{token}',
     handler: handler.validate
+  },
+  {
+    method: 'DELETE',
+    path: prefix + '/{token}',
+    handler: handler.logout
   }
 ]

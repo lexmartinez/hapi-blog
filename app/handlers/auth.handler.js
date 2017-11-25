@@ -4,6 +4,7 @@ const sha1 = require('sha1');
 const model = require('../models/token.model')
 const async = require('asyncawait/async')
 const await = require('asyncawait/await')
+const utils = require('../utils')
 
 module.exports = {
   login: (request, reply) => {
@@ -39,7 +40,16 @@ module.exports = {
   validate: async (request, reply) => {
     const query = await (model.findOne({where:{token: request.params.token}}))
     if(query && query.id && query.user){
-      reply({})
+      reply(utils.success)
+      return;
+    }
+    reply(Boom.unauthorized())
+  },
+  logout: async (request, reply) => {
+    const query = await (model.findOne({where:{token: request.params.token}}))
+    if(query && query.id && query.user){
+      query.destroy();
+      reply(utils.success)
       return;
     }
     reply(Boom.unauthorized())
