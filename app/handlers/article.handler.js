@@ -58,8 +58,6 @@ module.exports = {
         offset: request.query.offset ? Number(request.query.offset) : 0
       });
 
-      console.log(articles)
-
       for (var i = 0, len = articles.length; i < len; i++) {
         const tags = await (articles[i].getTags());
         const auth = await (author.findById(articles[i].getDataValue('author_id'), {attributes: {exclude: ['deletedAt']}}))
