@@ -40,9 +40,19 @@ module.exports = {
         reply(Boom.notFound())
       }
     } else {
+      const token = request.headers['x-auth-token']
+      let options = [['publishedAt', 'DESC']]
+
+      if (token) {
+        const val = await (auth.check(token))
+        if (val) {
+          options = [['createdAt', 'DESC']]
+        }
+      }
+
       const articles = await model.findAll({
         attributes: {exclude: ['deletedAt']},
-        order:[['publishedAt', 'DESC']],
+        order: options,
         limit: request.query.limit ? Number(request.query.limit) : 10,
         offset: request.query.offset ? Number(request.query.offset) : 0
       });
