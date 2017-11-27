@@ -43,21 +43,31 @@ module.exports = {
       }
     } else {
       const token = request.headers['x-auth-token']
-      let options = [['publishedAt', 'DESC']]
+      let options = {
+        attributes: {exclude: ['deletedAt']},
+        order: [['publishedAt', 'DESC']],
+        limit: request.query.limit ? Number(request.query.limit) : 10,
+        offset: request.query.offset ? Number(request.query.offset) : 0,
+        where: {
+          publishedAt: {
+            $ne: null
+          }
+        }
+      }
 
       if (token) {
         const val = await (auth.check(token))
         if (val) {
-          options = [['createdAt', 'DESC']]
+          options = {
+            attributes: {exclude: ['deletedAt']},
+            order: [['createdAt', 'DESC']],
+            limit: request.query.limit ? Number(request.query.limit) : 10,
+            offset: request.query.offset ? Number(request.query.offset) : 0
+          }
         }
       }
 
-      const articles = await model.findAll({
-        attributes: {exclude: ['deletedAt']},
-        order: options,
-        limit: request.query.limit ? Number(request.query.limit) : 10,
-        offset: request.query.offset ? Number(request.query.offset) : 0
-      });
+      const articles = await model.findAll(options);
 
       for (var i = 0, len = articles.length; i < len; i++) {
         const tags = await (articles[i].getTags());
