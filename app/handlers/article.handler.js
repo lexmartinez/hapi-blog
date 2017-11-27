@@ -99,13 +99,15 @@ module.exports = {
           article = await (model.findById(encodeURIComponent(request.params.id)))
         }
         if (article && article.id) {
-          const tags = []
-          for(let i=0; i<(request.payload.tags || []).length; i++){
-            const obj = await (tag.findById(request.payload.tags[i].id))
-            tags.push(obj)
-          }
+          if (request.payload.tags) {
+            const tags = []
+            for(let i=0; i<(request.payload.tags || []).length; i++){
+              const obj = await (tag.findById(request.payload.tags[i].id))
+              tags.push(obj)
+            }
 
-          const response = await(article.setTags(tags))
+            const response = await(article.setTags(tags))
+          }
           reply(utils.success)
         } else {
           reply(Boom.internal())
