@@ -46,8 +46,8 @@ module.exports = {
       let options = {
         attributes: {exclude: ['deletedAt']},
         order: [['publishedAt', 'DESC']],
-        limit: request.query.limit ? Number(request.query.limit) : 10,
-        offset: request.query.offset ? Number(request.query.offset) : 0,
+        // limit: request.query.limit ? Number(request.query.limit) : 10,
+        // offset: request.query.offset ? Number(request.query.offset) : 0,
         where: {
           publishedAt: {
             $ne: null
@@ -61,8 +61,8 @@ module.exports = {
           options = {
             attributes: {exclude: ['deletedAt']},
             order: [['createdAt', 'DESC']],
-            limit: request.query.limit ? Number(request.query.limit) : 10,
-            offset: request.query.offset ? Number(request.query.offset) : 0
+            // limit: request.query.limit ? Number(request.query.limit) : 10,
+            // offset: request.query.offset ? Number(request.query.offset) : 0
           }
         }
       }
