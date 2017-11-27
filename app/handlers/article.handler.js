@@ -100,7 +100,7 @@ module.exports = {
         }
         if (article && article.id) {
           const tags = []
-          for(let i=0; i<request.payload.tags.length; i++){
+          for(let i=0; i<(request.payload.tags || []).length; i++){
             const obj = await (tag.findById(request.payload.tags[i].id))
             tags.push(obj)
           }
