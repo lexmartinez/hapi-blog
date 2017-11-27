@@ -6,6 +6,7 @@ const await = require('asyncawait/await')
 const author = require('../models/author.model')
 const tag = require('../models/tag.model')
 const auth = require('./auth.handler')
+const utils = require('../utils')
 
 module.exports = {
   list: async (request, reply) => {
@@ -77,8 +78,34 @@ module.exports = {
   store: (request, reply) => {
     base.store(model, request, reply)
   },
-  update: (request, reply) => {
-    base.update(model, request, reply)
+  update: async (request, reply) => {
+    const token = request.headers['x-auth-token']
+    if (token) {
+      const val = await (auth.check(token))
+      if (val) {
+        const update = await (model.update(request.payload, {where: {id: encodeURIComponent(request.params.id)}}))
+        let article = {}
+        if(update[0] === 1){
+          article = await (model.findById(encodeURIComponent(request.params.id)))
+        }
+        if (article && article.id) {
+          const tags = []
+          for(let i=0; i<request.payload.tags.length; i++){
+            const obj = await (tag.findById(request.payload.tags[i].id))
+            tags.push(obj)
+          }
+
+          const response = await(article.setTags(tags))
+          reply(utils.success)
+        } else {
+          reply(Boom.internal())
+        }
+      } else {
+        reply(Boom.unauthorized())
+      }
+    } else {
+      reply(Boom.unauthorized())
+    }
   },
   delete: (request, reply) => {
     base.delete(model, request, reply)
@@ -94,5 +121,19 @@ module.exports = {
       }).catch(error => {
         reply(Boom.badImplementation(error))
       })
+  },
+  setTags: async (request, reply) => {
+    const article = await (model.findById(encodeURIComponent(request.params.id), {attributes: {exclude: ['deletedAt']}}))
+    if (article && article.id) {
+      const tags = []
+      for(let i=0; i<request.payload.length; i++){
+         const obj = await (tag.findById(request.payload[i].id))
+         tags.push(obj)
+      }
+      article.setTags(tags)
+      reply(utils.success)
+    } else {
+      reply(Boom.notFound())
+    }
   }
 }

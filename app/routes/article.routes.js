@@ -32,5 +32,10 @@ module.exports = [
     method: 'DELETE',
     path: prefix + '/{id}',
     handler: handler.delete
+  },
+  {
+    method: 'POST',
+    path: prefix + '/{id}/tags',
+    handler: handler.setTags
   }
 ]

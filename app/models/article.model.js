@@ -23,12 +23,11 @@ const article = sequelize.define('article', {
   },
   imageUrl: {
     type: Sequelize.TEXT,
-    allowNull: false,
     field: 'image_url',
     validate: { isUrl: true }
   },
   key: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING(200),
     allowNull: false,
     validate: { is: ['^([a-z0-9\\-])+', 'g'] },
     unique: true
