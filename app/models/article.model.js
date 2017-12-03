@@ -26,6 +26,11 @@ const article = sequelize.define('article', {
     field: 'image_url',
     validate: { isUrl: true }
   },
+  shortUrl: {
+    type: Sequelize.TEXT,
+    field: 'short_url',
+    validate: { isUrl: true }
+  },
   key: {
     type: Sequelize.STRING(200),
     allowNull: false,

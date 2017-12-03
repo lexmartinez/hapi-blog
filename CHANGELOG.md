@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+- Added article short URL support
+
 ## 0.0.1 - 2017-12-01
 - Created a `base.handler` for generic CRUD handler
 - Added basic CRUD for entities `article`, `author`, `tag`
