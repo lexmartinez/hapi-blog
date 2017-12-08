@@ -2,17 +2,16 @@
 const Boom = require('boom')
 const sha1 = require('sha1');
 const model = require('../models/token.model')
+const user = require('../models/user.model')
 const async = require('asyncawait/async')
 const await = require('asyncawait/await')
 const utils = require('../utils')
 
 module.exports = {
-  login: (request, reply) => {
-    const users = process.env.ADMIN_USERS.split(',');
-    const passwords = process.env.ADMIN_PASSWORDS.split(',');
-    const idx = users.indexOf(request.payload.username);
-    if(idx !== -1 && passwords[idx] === sha1(request.payload.password)) {
-
+  login: async (request, reply) => {
+    const record = await (user.findOne({where:{username: request.payload.username}}))
+    console.log(record)
+    if(record && record.id && record.password === sha1(request.payload.password)){
       const current_date = (new Date()).valueOf().toString();
       const random = Math.random().toString();
       const token = sha1(current_date + random);
@@ -24,6 +23,7 @@ module.exports = {
           reply(response)
         })
         .catch(error => {
+          console.log(error)
           reply(Boom.internal(error));
         })
     } else {

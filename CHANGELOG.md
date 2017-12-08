@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 - Added article short URL support
+- Improved auth strategy (database)
 
 ## 0.0.1 - 2017-12-01
 - Created a `base.handler` for generic CRUD handler
