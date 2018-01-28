@@ -46,8 +46,8 @@ module.exports = {
       let options = {
         attributes: {exclude: ['deletedAt']},
         order: [['publishedAt', 'DESC']],
-        // limit: request.query.limit ? Number(request.query.limit) : 10,
-        // offset: request.query.offset ? Number(request.query.offset) : 0,
+        limit: request.query.limit ? Number(request.query.limit) : 10,
+        offset: request.query.offset ? Number(request.query.offset) : 0,
         where: {
           publishedAt: {
             $ne: null
@@ -61,13 +61,14 @@ module.exports = {
           options = {
             attributes: {exclude: ['deletedAt']},
             order: [['createdAt', 'DESC']],
-            // limit: request.query.limit ? Number(request.query.limit) : 10,
-            // offset: request.query.offset ? Number(request.query.offset) : 0
+            limit: request.query.limit ? Number(request.query.limit) : 10,
+            offset: request.query.offset ? Number(request.query.offset) : 0
           }
         }
       }
 
-      const articles = await model.findAll(options);
+      const rsx = await model.findAndCountAll(options)
+      const articles = rsx.rows;
 
       for (var i = 0, len = articles.length; i < len; i++) {
         const tags = await (articles[i].getTags());
@@ -77,9 +78,10 @@ module.exports = {
         articles[i].setDataValue('author_id', undefined)
       }
 
-      const total = await model.count();
-      const response = reply(articles);
-      response.header('x-total-articles', total)
+      const response = reply(articles)
+      response.header('x-total-articles', rsx.count)
+      response.header('x-total-rows', rsx.count)
+      response.header('Access-Control-Expose-Headers', 'x-total-rows, x-total-articles')
     }
   },
   find: (request, reply) => {
