@@ -4,8 +4,18 @@ const auth = require('./auth.handler')
 
 module.exports = {
   list: (model, request, reply) => {
-    model.findAll({attributes: {exclude: ['deletedAt']}}).then(objects => {
-      reply(objects)
+    let options = {attributes: {exclude: ['deletedAt']}}
+    if (request.query.limit) {
+      options = {
+        offset: Number(request.query.offset || '0'),
+        limit: Number(request.query.limit),
+        attributes: {exclude: ['deletedAt']}
+      }
+    }
+    model.findAndCountAll(options).then(response => {
+      const res = reply(response.rows)
+      res.header('x-total-rows', response.count)
+      res.header('Access-Control-Expose-Headers', 'x-total-rows')
     }).catch(error => {
       reply(Boom.badImplementation(error))
     })
