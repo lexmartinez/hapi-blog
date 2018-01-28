@@ -5,7 +5,8 @@ const Boom = require('boom')
 
 module.exports = {
   list: (request, reply) => {
-    base.list(model, request, reply)
+    const sort = [[(request.query['sort_column'] || 'name'), (request.query['sort_order'] || 'ASC')]]
+    base.list(model, request, reply, sort)
   },
   find: (request, reply) => {
     base.find(model, request, reply)

@@ -3,13 +3,14 @@ const utils = require('../utils')
 const auth = require('./auth.handler')
 
 module.exports = {
-  list: (model, request, reply) => {
-    let options = {attributes: {exclude: ['deletedAt']}}
+  list: (model, request, reply, order) => {
+    let options = {attributes: {exclude: ['deletedAt']}, order}
     if (request.query.limit) {
       options = {
         offset: Number(request.query.offset || '0'),
         limit: Number(request.query.limit),
-        attributes: {exclude: ['deletedAt']}
+        attributes: {exclude: ['deletedAt']},
+        order
       }
     }
     model.findAndCountAll(options).then(response => {
