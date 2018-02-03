@@ -2,8 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
-- Added article short URL support
-- Improved auth strategy (database)
+...
 
 ## 0.0.1 - 2017-12-01
 - Created a `base.handler` for generic CRUD handler
@@ -17,3 +16,5 @@ All notable changes to this project will be documented in this file.
 - Pagination behaviour on `base.handler` added
 - Sorting behaviour on `base.handler` added
 - Sorting & Pagination options on `article.handler` added
+- Added article short URL support
+- Improved auth strategy (database)
