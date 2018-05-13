@@ -1,7 +1,7 @@
 # hapi-blog
 [![Build Status](https://img.shields.io/travis/lexmartinez/hapi-blog/master.svg?style=for-the-badge)](https://travis-ci.org/lexmartinez/hapi-blog)
 [![GitHub license](https://img.shields.io/github/license/lexmartinez/hapi-blog.svg?style=for-the-badge)](https://github.com/lexmartinez/hapi-blog/blob/master/LICENSE.md)
-[![Last version](https://img.shields.io/badge/hapi--blog-v1.0.0-blue.svg?style=for-the-badge)](https://github.com/lexmartinez/hapi-blog/blob/master/CHANGELOG.md)
+[![Last version](https://img.shields.io/badge/version-v1.0.0-blue.svg?style=for-the-badge)](https://github.com/lexmartinez/hapi-blog/blob/master/CHANGELOG.md)
 <br/><br/>
 :octopus: A blogging engine API built on HapiJS <br/>
 
